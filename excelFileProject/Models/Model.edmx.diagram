@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="19e99e12998b4aa2b4923a9317ab265f" Name="Diagram1">
+        <EntityTypeShape EntityType="excelFileProjectModel.country" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="excelFileProjectModel.currency" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="excelFileProjectModel.fundSymbol" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="excelFileProjectModel.master" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="excelFileProjectModel.region" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="excelFileProjectModel.FK_country_currency" ManuallyRouted="false" />
+        <AssociationConnector Association="excelFileProjectModel.FK_country_fundSymbol" ManuallyRouted="false" />
+        <AssociationConnector Association="excelFileProjectModel.FK_country_region" ManuallyRouted="false" />
+        <AssociationConnector Association="excelFileProjectModel.FK_master_country" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

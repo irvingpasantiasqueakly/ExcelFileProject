@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="excelFileProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countries" Type="nvarchar" MaxLength="75" />
+          <Property Name="countryCodes" Type="nvarchar" MaxLength="10" />
+          <Property Name="region_id" Type="int" />
+          <Property Name="currency_id" Type="int" />
+          <Property Name="fundSymbol_id" Type="int" />
+        </EntityType>
+        <EntityType Name="currency">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="currencies" Type="nvarchar" MaxLength="75" />
+        </EntityType>
+        <EntityType Name="fundSymbol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fundSymbols" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="country_id" Type="int" />
+          <Property Name="portfolioWeight" Type="float" />
+          <Property Name="effectiveDuration" Type="float" />
+          <Property Name="embeddedIncomeYield" Type="float" />
+          <Property Name="yieldToMaturity" Type="float" />
+        </EntityType>
+        <EntityType Name="region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="regions" Type="nvarchar" MaxLength="75" />
+        </EntityType>
+        <Association Name="FK_country_currency">
+          <End Role="currency" Type="Self.currency" Multiplicity="0..1" />
+          <End Role="country" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="currency">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="country">
+              <PropertyRef Name="currency_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_country_fundSymbol">
+          <End Role="fundSymbol" Type="Self.fundSymbol" Multiplicity="0..1" />
+          <End Role="country" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fundSymbol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="country">
+              <PropertyRef Name="fundSymbol_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_country_region">
+          <End Role="region" Type="Self.region" Multiplicity="0..1" />
+          <End Role="country" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="region">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="country">
+              <PropertyRef Name="region_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_master_country">
+          <End Role="country" Type="Self.country" Multiplicity="0..1" />
+          <End Role="master" Type="Self.master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="master">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="excelFileProjectModelStoreContainer">
+          <EntitySet Name="country" EntityType="Self.country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="currency" EntityType="Self.currency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fundSymbol" EntityType="Self.fundSymbol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="master" EntityType="Self.master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="region" EntityType="Self.region" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_country_currency" Association="Self.FK_country_currency">
+            <End Role="currency" EntitySet="currency" />
+            <End Role="country" EntitySet="country" />
+          </AssociationSet>
+          <AssociationSet Name="FK_country_fundSymbol" Association="Self.FK_country_fundSymbol">
+            <End Role="fundSymbol" EntitySet="fundSymbol" />
+            <End Role="country" EntitySet="country" />
+          </AssociationSet>
+          <AssociationSet Name="FK_country_region" Association="Self.FK_country_region">
+            <End Role="region" EntitySet="region" />
+            <End Role="country" EntitySet="country" />
+          </AssociationSet>
+          <AssociationSet Name="FK_master_country" Association="Self.FK_master_country">
+            <End Role="country" EntitySet="country" />
+            <End Role="master" EntitySet="master" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="excelFileProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countries" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+          <Property Name="countryCodes" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="region_id" Type="Int32" />
+          <Property Name="currency_id" Type="Int32" />
+          <Property Name="fundSymbol_id" Type="Int32" />
+          <NavigationProperty Name="currency" Relationship="Self.FK_country_currency" FromRole="country" ToRole="currency" />
+          <NavigationProperty Name="fundSymbol" Relationship="Self.FK_country_fundSymbol" FromRole="country" ToRole="fundSymbol" />
+          <NavigationProperty Name="region" Relationship="Self.FK_country_region" FromRole="country" ToRole="region" />
+          <NavigationProperty Name="masters" Relationship="Self.FK_master_country" FromRole="country" ToRole="master" />
+        </EntityType>
+        <EntityType Name="currency">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="currencies" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="countries" Relationship="Self.FK_country_currency" FromRole="currency" ToRole="country" />
+        </EntityType>
+        <EntityType Name="fundSymbol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fundSymbols" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="countries" Relationship="Self.FK_country_fundSymbol" FromRole="fundSymbol" ToRole="country" />
+        </EntityType>
+        <EntityType Name="master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="country_id" Type="Int32" />
+          <Property Name="portfolioWeight" Type="Double" />
+          <Property Name="effectiveDuration" Type="Double" />
+          <Property Name="embeddedIncomeYield" Type="Double" />
+          <Property Name="yieldToMaturity" Type="Double" />
+          <NavigationProperty Name="country" Relationship="Self.FK_master_country" FromRole="master" ToRole="country" />
+        </EntityType>
+        <EntityType Name="region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="regions" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="countries" Relationship="Self.FK_country_region" FromRole="region" ToRole="country" />
+        </EntityType>
+        <Association Name="FK_country_currency">
+          <End Role="currency" Type="Self.currency" Multiplicity="0..1" />
+          <End Role="country" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="currency">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="country">
+              <PropertyRef Name="currency_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_country_fundSymbol">
+          <End Role="fundSymbol" Type="Self.fundSymbol" Multiplicity="0..1" />
+          <End Role="country" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fundSymbol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="country">
+              <PropertyRef Name="fundSymbol_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_country_region">
+          <End Role="region" Type="Self.region" Multiplicity="0..1" />
+          <End Role="country" Type="Self.country" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="region">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="country">
+              <PropertyRef Name="region_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_master_country">
+          <End Role="country" Type="Self.country" Multiplicity="0..1" />
+          <End Role="master" Type="Self.master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="master">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="excelFileProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="countries" EntityType="Self.country" />
+          <EntitySet Name="currencies" EntityType="Self.currency" />
+          <EntitySet Name="fundSymbols" EntityType="Self.fundSymbol" />
+          <EntitySet Name="masters" EntityType="Self.master" />
+          <EntitySet Name="regions" EntityType="Self.region" />
+          <AssociationSet Name="FK_country_currency" Association="Self.FK_country_currency">
+            <End Role="currency" EntitySet="currencies" />
+            <End Role="country" EntitySet="countries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_country_fundSymbol" Association="Self.FK_country_fundSymbol">
+            <End Role="fundSymbol" EntitySet="fundSymbols" />
+            <End Role="country" EntitySet="countries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_country_region" Association="Self.FK_country_region">
+            <End Role="region" EntitySet="regions" />
+            <End Role="country" EntitySet="countries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_master_country" Association="Self.FK_master_country">
+            <End Role="country" EntitySet="countries" />
+            <End Role="master" EntitySet="masters" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="excelFileProjectModelStoreContainer" CdmEntityContainer="excelFileProjectEntities">
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="excelFileProjectModel.country">
+              <MappingFragment StoreEntitySet="country">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="countries" ColumnName="countries" />
+                <ScalarProperty Name="countryCodes" ColumnName="countryCodes" />
+                <ScalarProperty Name="region_id" ColumnName="region_id" />
+                <ScalarProperty Name="currency_id" ColumnName="currency_id" />
+                <ScalarProperty Name="fundSymbol_id" ColumnName="fundSymbol_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="currencies">
+            <EntityTypeMapping TypeName="excelFileProjectModel.currency">
+              <MappingFragment StoreEntitySet="currency">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="currencies" ColumnName="currencies" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fundSymbols">
+            <EntityTypeMapping TypeName="excelFileProjectModel.fundSymbol">
+              <MappingFragment StoreEntitySet="fundSymbol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fundSymbols" ColumnName="fundSymbols" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="masters">
+            <EntityTypeMapping TypeName="excelFileProjectModel.master">
+              <MappingFragment StoreEntitySet="master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="portfolioWeight" ColumnName="portfolioWeight" />
+                <ScalarProperty Name="effectiveDuration" ColumnName="effectiveDuration" />
+                <ScalarProperty Name="embeddedIncomeYield" ColumnName="embeddedIncomeYield" />
+                <ScalarProperty Name="yieldToMaturity" ColumnName="yieldToMaturity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="regions">
+            <EntityTypeMapping TypeName="excelFileProjectModel.region">
+              <MappingFragment StoreEntitySet="region">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="regions" ColumnName="regions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
